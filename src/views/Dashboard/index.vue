@@ -13,6 +13,15 @@
         </span>
       </template>
     </Column>
+    <Column field="" header="Actions">
+      <template #body="slotProps">
+        <Button
+          @click="updateSelectedCity(slotProps.data.name)"
+          icon="pi pi-chart-line"
+          class="p-button-sm p-button-outlined p-button-rounded"
+        />
+      </template>
+    </Column>
   </DataTable>
 </template>
 
@@ -32,6 +41,10 @@ export default {
         new Date().getMilliseconds(),
         dateObject.getMilliseconds()
       )
+    },
+    updateSelectedCity(city) {
+      this.$store.dispatch('updateSelectedCity', city)
+      this.$router.push('/liveChart').catch((err) => console.error(err))
     },
   },
 }

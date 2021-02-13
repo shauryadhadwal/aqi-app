@@ -1,3 +1,5 @@
+export const HISTORY_LIMIT = process.env.HISTORY_LIMIT || 10
+
 export const AIR_QUALITY_STANDARDS_HEX_CODES = {
   GOOD: '#5DA84F',
   SATISFACTORY: '#A3C853',

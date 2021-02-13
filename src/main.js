@@ -11,6 +11,8 @@ import 'primeflex/primeflex.css'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import ColumnGroup from 'primevue/columngroup'
+import Button from 'primevue/button'
+import Chart from 'primevue/chart'
 
 const app = createApp(App)
 app.use(store)
@@ -21,8 +23,10 @@ app.mount('#app')
 app.component('DataTable', DataTable)
 app.component('Column', Column)
 app.component('ColumnGroup', ColumnGroup)
+app.component('Button', Button)
+app.component('Chart', Chart)
 
-const ws_conn = 'wss://city-ws.herokuapp.com'
+const ws_conn = process.env.VUE_APP_SOCKET_CONN
 const socket = new WebSocket(ws_conn, ['websocket'])
 socket.addEventListener('message', function(event) {
   if (typeof event.data === 'string') {
