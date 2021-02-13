@@ -6,15 +6,31 @@ const getDefaultState = () => ({
 
 const createCityPayload = (payload) => ({
   name: payload.city,
-  aqi: payload.aqi,
+  aqi: parseFloat(payload.aqi.toFixed(2)),
   updatedAt: new Date(),
 })
+
+const sortCityAscending = (a, b) => {
+  const aName = a.name.toUpperCase()
+  const bName = b.name.toUpperCase()
+  if (aName > bName) {
+    return 1
+  }
+  if (aName < bName) {
+    return -1
+  }
+  return 0
+}
 
 export default createStore({
   state: getDefaultState(),
   getters: {
     allCities(state) {
       return Object.values(state.cities)
+    },
+    // Default Ascending
+    allCitiesSortedByName(state) {
+      return Object.values(state.cities).sort(sortCityAscending)
     },
   },
   mutations: {
