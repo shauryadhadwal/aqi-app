@@ -108,7 +108,8 @@ export default {
   },
   watch: {
     selectedCityLatestEntry(entry) {
-      this.insertIntoChartData(entry)
+      if (!entry) return
+      this.insertEntriesIntoChartData([entry])
       this.allTime.max =
         entry.aqi > this.allTime.max ? entry.aqi : this.allTime.max
       this.allTime.min =
@@ -120,13 +121,19 @@ export default {
     redirectToHome() {
       this.$router.replace('/').catch((err) => console.error(err))
     },
-    insertIntoChartData(entry) {
+    insertEntriesIntoChartData(entries) {
       if (this.chartData.labels.length >= HISTORY_LIMIT) {
-        this.chartData.labels.splice(0, 1)
-        this.chartData.datasets.forEach((dataset) => dataset.data.splice(0, 1))
+        this.chartData.labels.splice(0, entries.length)
+        this.chartData.datasets.forEach((dataset) =>
+          dataset.data.splice(0, entries.length)
+        )
       }
-      this.chartData.labels.push(FormatDate.getTimeInHHmmss(entry.updatedAt))
-      this.chartData.datasets.forEach((dataset) => dataset.data.push(entry.aqi))
+      entries.forEach((entry) => {
+        this.chartData.labels.push(FormatDate.getTimeInHHmmss(entry.updatedAt))
+        this.chartData.datasets.forEach((dataset) =>
+          dataset.data.push(entry.aqi)
+        )
+      })
       this.$refs.liveChart.refresh()
     },
     initializeInitData(entry) {
@@ -140,20 +147,21 @@ export default {
     const vm = this
     if (!vm.selectedCity) {
       vm.$router.replace('/')
-    }
-    vm.chartData.datasets[0].label = vm.selectedCity
-    const lastEntry = vm.cityHistory(vm.selectedCity)[
-      vm.cityHistory(vm.selectedCity).length - 1
-    ]
-    if (!lastEntry) {
       return
     }
-    this.initializeInitData(lastEntry)
-    this.insertIntoChartData(lastEntry)
+    vm.chartData.datasets[0].label = vm.selectedCity
+
+    const entries = vm.cityHistory(vm.selectedCity)
+    if (!entries.length) {
+      return
+    }
+    this.initializeInitData(entries[entries.length - 1])
+    this.insertEntriesIntoChartData(entries)
   },
   created() {
     if (!this.selectedCity) {
       this.$router.replace('/')
+      return
     }
     this.chartData.datasets[0].label = this.selectedCity
   },
