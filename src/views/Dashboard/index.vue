@@ -32,6 +32,7 @@
               @click="updateSelectedCity(slotProps.data.name)"
               icon="pi pi-chart-line"
               class="p-button-sm p-button-outlined p-button-rounded"
+              v-tooltip="'Live Chart'"
             />
           </template>
         </Column>

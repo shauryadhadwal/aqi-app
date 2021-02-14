@@ -29,12 +29,14 @@
             @click="toggleChartUpdateState"
             icon="pi pi-pause"
             class="p-button-sm p-button-outlined p-button-rounded"
+            v-tooltip="'Pause'"
           />
           <Button
             v-show="updatesArePaused"
             @click="toggleChartUpdateState"
             icon="pi pi-play"
             class="p-button-sm p-button-outlined p-button-rounded"
+            v-tooltip="'Resume'"
           />
         </div>
       </template>
