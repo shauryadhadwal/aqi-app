@@ -22,12 +22,28 @@
           ref="liveChart"
         />
       </template>
+      <template #footer>
+        <div class="p-grid p-jc-center">
+          <Button
+            v-show="!updatesArePaused"
+            @click="toggleChartUpdateState"
+            icon="pi pi-pause"
+            class="p-button-sm p-button-outlined p-button-rounded"
+          />
+          <Button
+            v-show="updatesArePaused"
+            @click="toggleChartUpdateState"
+            icon="pi pi-play"
+            class="p-button-sm p-button-outlined p-button-rounded"
+          />
+        </div>
+      </template>
     </Card>
   </section>
   <section id="status-section" class="p-d-flex p-jc-center badge-container">
-    <AqiLevelBadge :label="'All Time High'" :value="allTime.max" />
-    <AqiLevelBadge :label="'All Time Low'" :value="allTime.min" />
-    <AqiLevelBadge :label="'Latest'" :value="allTime.latest" />
+    <AqiLevelBadge :label="'All Time High'" :value="allTimeLevels.max" />
+    <AqiLevelBadge :label="'All Time Low'" :value="allTimeLevels.min" />
+    <AqiLevelBadge :label="'Latest'" :value="allTimeLevels.latest" />
   </section>
 </template>
 
@@ -112,11 +128,12 @@ export default {
         datasets: getDataSets(),
       },
       chartOptions: getChartOptions(),
-      allTime: {
+      allTimeLevels: {
         max: undefined,
         min: undefined,
         latest: undefined,
       },
+      updatesArePaused: false,
     }
   },
   computed: {
@@ -125,13 +142,13 @@ export default {
   },
   watch: {
     selectedCityLatestEntry(entry) {
-      if (!entry) return
+      if (!entry || this.updatesArePaused) return
       this.insertEntriesIntoChartData([entry])
-      this.allTime.max =
-        entry.aqi > this.allTime.max ? entry.aqi : this.allTime.max
-      this.allTime.min =
-        entry.aqi < this.allTime.min ? entry.aqi : this.allTime.min
-      this.allTime.latest = entry.aqi
+      this.allTimeLevels.max =
+        entry.aqi > this.allTimeLevels.max ? entry.aqi : this.allTimeLevels.max
+      this.allTimeLevels.min =
+        entry.aqi < this.allTimeLevels.min ? entry.aqi : this.allTimeLevels.min
+      this.allTimeLevels.latest = entry.aqi
     },
   },
   methods: {
@@ -155,9 +172,12 @@ export default {
     },
     initializeInitData(entry) {
       if (!entry) return
-      this.allTime.max = entry.aqi
-      this.allTime.min = entry.aqi
-      this.allTime.latest = entry.aqi
+      this.allTimeLevels.max = entry.aqi
+      this.allTimeLevels.min = entry.aqi
+      this.allTimeLevels.latest = entry.aqi
+    },
+    toggleChartUpdateState() {
+      this.updatesArePaused = !this.updatesArePaused
     },
   },
   mounted() {
