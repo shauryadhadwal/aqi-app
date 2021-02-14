@@ -1,11 +1,7 @@
 <template>
   <section id="heading-section" class="p-grid">
     <div class="p-col-1 p-grid p-jc-center p-align-center">
-      <Button
-        @click="redirectToHome"
-        icon="pi pi-home"
-        class="p-button-sm p-button-outlined p-button-rounded"
-      />
+      <RedirectToHomeButton />
     </div>
     <div class="p-col">
       <h1>Live Chart for {{ selectedCity }}</h1>
@@ -54,6 +50,7 @@ import { mapState, mapGetters } from 'vuex'
 import { FormatDate } from '../../shared/utils'
 import { HISTORY_LIMIT } from '../../shared/constants'
 import AqiLevelBadge from '@/components/Badge/AqiLevelBadge'
+import RedirectToHomeButton from '@/components/Button/RedirectToHome'
 
 const COLOUR_SCEME = {
   LINE_COLOUR: 'rgba(207, 216, 220 ,0.8)',
@@ -122,7 +119,7 @@ const getDataSets = () => [
 ]
 
 export default {
-  components: { AqiLevelBadge },
+  components: { AqiLevelBadge, RedirectToHomeButton },
   data() {
     return {
       chartData: {
@@ -154,9 +151,6 @@ export default {
     },
   },
   methods: {
-    redirectToHome() {
-      this.$router.replace('/').catch((err) => console.error(err))
-    },
     insertEntriesIntoChartData(entries) {
       if (this.chartData.labels.length >= HISTORY_LIMIT) {
         this.chartData.labels.splice(0, entries.length)
