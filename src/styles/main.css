@@ -34,3 +34,7 @@ html {
   background: rgba(149, 149, 149, 0.8);
 }
 /*  */
+
+.p-button:hover {
+  background-color: rgb(199, 199, 216) !important;
+}
