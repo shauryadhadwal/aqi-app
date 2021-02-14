@@ -37,21 +37,32 @@ import { FormatDate } from '../../shared/utils'
 import { HISTORY_LIMIT } from '../../shared/constants'
 import AqiLevelBadge from '@/components/Badge/AqiLevelBadge'
 
+const COLOUR_SCEME = {
+  LINE_COLOUR: 'rgba(207, 216, 220 ,0.8)',
+  AREA_COLOUR: 'rgba(207, 216, 220 , 0.2)',
+}
+
 const getChartOptions = () => ({
   maintainAspectRatio: false,
   elements: {
     line: {
       tension: 0,
-      borderColor: '#54636D',
+      borderColor: COLOUR_SCEME.LINE_COLOUR,
+      borderWidth: 8,
     },
   },
   scales: {
     yAxes: [
       {
+        scaleLabel: {
+          display: true,
+          labelString: 'AQI Levels',
+        },
         gridLines: {
           display: false,
         },
         ticks: {
+          display: false,
           autoSkip: false,
           stepSize: 1,
         },
@@ -59,6 +70,10 @@ const getChartOptions = () => ({
     ],
     xAxes: [
       {
+        scaleLabel: {
+          display: true,
+          labelString: 'Timestamp 24 Hour Format(HH:mm:ss)',
+        },
         ticks: {
           autoSkip: false,
           maxRotation: 90,
@@ -72,6 +87,8 @@ const getChartOptions = () => ({
   },
   hover: {
     animationDuration: 0,
+    mode: 'index',
+    intersect: false,
   },
   animation: {
     duration: 0,
@@ -81,7 +98,7 @@ const getChartOptions = () => ({
 const getDataSets = () => [
   {
     label: undefined,
-    backgroundColor: '#DCE6EC',
+    backgroundColor: COLOUR_SCEME.AREA_COLOUR,
     data: [],
   },
 ]
@@ -168,9 +185,4 @@ export default {
 }
 </script>
 
-<style scoped>
-#chart-section {
-  height: 60vh;
-  position: relative;
-}
-</style>
+<style scoped></style>
