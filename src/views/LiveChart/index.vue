@@ -1,48 +1,50 @@
 <template>
-  <section id="heading-section" class="p-grid">
-    <div class="p-col-1 p-grid p-jc-center p-align-center">
-      <RedirectToHomeButton />
-    </div>
-    <div class="p-col">
-      <h1>Live Chart for {{ selectedCity }}</h1>
-    </div>
-  </section>
-  <section id="chart-section">
-    <Card>
-      <template #content>
-        <Chart
-          type="line"
-          :data="chartData"
-          :options="chartOptions"
-          :height="400"
-          ref="liveChart"
-        />
-      </template>
-      <template #footer>
-        <div class="p-grid p-jc-center">
-          <Button
-            v-show="!updatesArePaused"
-            @click="toggleChartUpdateState"
-            icon="pi pi-pause"
-            class="p-button-sm p-button-outlined p-button-rounded"
-            v-tooltip="'Pause'"
+  <div>
+    <section id="heading-section" class="p-grid">
+      <div class="p-col-1 p-grid p-jc-center p-align-center">
+        <RedirectToHomeButton />
+      </div>
+      <div class="p-col">
+        <h1>Live Chart for {{ selectedCity }}</h1>
+      </div>
+    </section>
+    <section id="chart-section">
+      <Card>
+        <template #content>
+          <Chart
+            type="line"
+            :data="chartData"
+            :options="chartOptions"
+            :height="400"
+            ref="liveChart"
           />
-          <Button
-            v-show="updatesArePaused"
-            @click="toggleChartUpdateState"
-            icon="pi pi-play"
-            class="p-button-sm p-button-outlined p-button-rounded"
-            v-tooltip="'Resume'"
-          />
-        </div>
-      </template>
-    </Card>
-  </section>
-  <section id="status-section" class="p-d-flex p-jc-center badge-container">
-    <AqiLevelBadge :label="'All Time High'" :value="allTimeLevels.max" />
-    <AqiLevelBadge :label="'All Time Low'" :value="allTimeLevels.min" />
-    <AqiLevelBadge :label="'Latest'" :value="allTimeLevels.latest" />
-  </section>
+        </template>
+        <template #footer>
+          <div class="p-grid p-jc-center">
+            <Button
+              v-show="!updatesArePaused"
+              @click="toggleChartUpdateState"
+              icon="pi pi-pause"
+              class="p-button-sm p-button-outlined p-button-rounded"
+              v-tooltip="'Pause'"
+            />
+            <Button
+              v-show="updatesArePaused"
+              @click="toggleChartUpdateState"
+              icon="pi pi-play"
+              class="p-button-sm p-button-outlined p-button-rounded"
+              v-tooltip="'Resume'"
+            />
+          </div>
+        </template>
+      </Card>
+    </section>
+    <section id="status-section" class="p-d-flex p-jc-center badge-container">
+      <AqiLevelBadge :label="'All Time High'" :value="allTimeLevels.max" />
+      <AqiLevelBadge :label="'All Time Low'" :value="allTimeLevels.min" />
+      <AqiLevelBadge :label="'Latest'" :value="allTimeLevels.latest" />
+    </section>
+  </div>
 </template>
 
 <script>

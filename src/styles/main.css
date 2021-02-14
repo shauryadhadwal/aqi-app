@@ -38,3 +38,35 @@ html {
 .p-button:hover {
   background-color: rgb(199, 199, 216) !important;
 }
+
+/* Transitions */
+.route-enter-from,
+.route-leave-to {
+  opacity: 0;
+  transform: translateX(-1vw);
+}
+
+.route-enter-active,
+.route-leave-active {
+  transition: all 0.3s ease;
+}
+
+.route-enter-to,
+.route-leave-from {
+  opacity: 1;
+}
+
+.value-update-enter-from,
+.value-update-leave-to {
+  transform: scale(0.9, 0.9);
+}
+
+.value-update-enter-active,
+.value-update-leave-active {
+  transition: all 0.3s ease;
+}
+
+.value-update-enter-to,
+.value-update-leave-from {
+  transform: scale(1, 1);
+}

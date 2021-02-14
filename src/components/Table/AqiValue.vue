@@ -1,5 +1,9 @@
 <template>
-  <div class="container" :style="'border-color:' + color">{{ value }}</div>
+  <transition name="value-update" mode="out-in">
+    <div class="container" :style="'border-color:' + color" :key="value">
+      {{ value }}
+    </div>
+  </transition>
 </template>
 
 <script>

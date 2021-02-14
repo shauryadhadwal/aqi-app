@@ -7,7 +7,9 @@
       <div class="box">{{ label }}</div>
     </div>
     <div class="p-col">
-      <div class="box highlight">{{ value }}</div>
+      <transition name="route" mode="out-in">
+        <div class="box highlight" :key="value">{{ value }}</div>
+      </transition>
     </div>
   </div>
 </template>
@@ -35,14 +37,14 @@ export default {
 </script>
 
 <style scoped>
+.highlight {
+  font-size: 2rem;
+}
 .info-item-container {
   color: #fff;
   font-weight: 900;
   border-radius: 0.5rem;
   width: 10rem;
   margin: 0.5rem;
-}
-.highlight {
-  font-size: 2rem;
 }
 </style>

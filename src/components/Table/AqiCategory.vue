@@ -31,5 +31,6 @@ export default {
   width: 8rem;
   font-size: 0.8rem;
   text-align: center;
+  transition: 0.5s all ease;
 }
 </style>

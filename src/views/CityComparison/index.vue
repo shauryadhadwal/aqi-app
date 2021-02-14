@@ -1,46 +1,48 @@
 <template>
-  <section id="heading-section" class="p-grid">
-    <div class="p-col-1 p-grid p-jc-center p-align-center">
-      <RedirectToHomeButton />
-    </div>
-    <div class="p-col p-grid p-jc-left p-align-center">
-      <Button
-        @click="resetDropdown"
-        icon="pi pi-refresh"
-        class="p-button-sm p-button-outlined p-button-rounded p-mr-1"
-        v-tooltip="'Reset Dropdown'"
-      />
-      <MultiSelect
-        v-model="selectedCities"
-        :options="availableCities"
-        optionLabel="name"
-        placeholder="Select cities to compare"
-        class="multiselect-custom"
-      >
-        <template #value="slotProps">
-          <div
-            class="city-item city-item-value"
-            v-for="option of slotProps.value"
-            :key="option.code"
-          >
-            <div>{{ option.name }}</div>
-          </div>
-          <template v-if="!slotProps.value || slotProps.value.length === 0">
-            Select upto 5 cities to compare
+  <div>
+    <section id="heading-section" class="p-grid">
+      <div class="p-col-1 p-grid p-jc-center p-align-center">
+        <RedirectToHomeButton />
+      </div>
+      <div class="p-col p-grid p-jc-left p-align-center">
+        <Button
+          @click="resetDropdown"
+          icon="pi pi-refresh"
+          class="p-button-sm p-button-outlined p-button-rounded p-mr-1"
+          v-tooltip="'Reset Dropdown'"
+        />
+        <MultiSelect
+          v-model="selectedCities"
+          :options="availableCities"
+          optionLabel="name"
+          placeholder="Select cities to compare"
+          class="multiselect-custom"
+        >
+          <template #value="slotProps">
+            <div
+              class="city-item city-item-value"
+              v-for="option of slotProps.value"
+              :key="option.code"
+            >
+              <div>{{ option.name }}</div>
+            </div>
+            <template v-if="!slotProps.value || slotProps.value.length === 0">
+              Select upto 5 cities to compare
+            </template>
           </template>
-        </template>
-        <template #option="slotProps">
-          <div class="city-item">
-            <div>{{ slotProps.option.name }}</div>
-          </div>
-        </template>
-      </MultiSelect>
-    </div>
-  </section>
-  <section id="actions-section"></section>
-  <section id="chart-section">
-    <ChartSection :cities="selectedCities" />
-  </section>
+          <template #option="slotProps">
+            <div class="city-item">
+              <div>{{ slotProps.option.name }}</div>
+            </div>
+          </template>
+        </MultiSelect>
+      </div>
+    </section>
+    <section id="actions-section"></section>
+    <section id="chart-section">
+      <ChartSection :cities="selectedCities" />
+    </section>
+  </div>
 </template>
 
 <script>

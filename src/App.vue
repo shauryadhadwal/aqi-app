@@ -6,7 +6,11 @@
     <div class="sub-header">For Major Indian Cities</div>
   </section>
   <section class="main-content">
-    <router-view />
+    <router-view v-slot="slotProps">
+      <transition name="route" mode="out-in">
+        <component :is="slotProps.Component"></component>
+      </transition>
+    </router-view>
   </section>
 </template>
 
