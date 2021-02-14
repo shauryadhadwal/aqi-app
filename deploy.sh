@@ -7,5 +7,5 @@ cd dist
 git init
 git add -A
 git commit -m 'deploy'
-git push -f git@github.com:shauryadhadwal/aqi-app.git master:gh-pages
+git push -f git@github.com:<git-hub-username>/aqi-app.git master:gh-pages
 cd -
