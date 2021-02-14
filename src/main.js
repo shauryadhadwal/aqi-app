@@ -6,6 +6,7 @@ import 'primevue/resources/themes/saga-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
+import './styles/main.css'
 // Prime Vue Components
 
 import DataTable from 'primevue/datatable'
@@ -13,6 +14,7 @@ import Column from 'primevue/column'
 import ColumnGroup from 'primevue/columngroup'
 import Button from 'primevue/button'
 import Chart from 'primevue/chart'
+import Card from 'primevue/card'
 
 const app = createApp(App)
 app.use(store)
@@ -25,6 +27,7 @@ app.component('Column', Column)
 app.component('ColumnGroup', ColumnGroup)
 app.component('Button', Button)
 app.component('Chart', Chart)
+app.component('Card', Card)
 
 const ws_conn = process.env.VUE_APP_SOCKET_CONN
 const socket = new WebSocket(ws_conn, ['websocket'])

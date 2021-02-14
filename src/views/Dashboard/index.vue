@@ -1,28 +1,32 @@
 <template>
-  <DataTable :value="allCities">
-    <Column field="name" header="Name" :sortable="true"></Column>
-    <Column field="aqi" header="Air Quality Index" :sortable="true">
-      <template #body="slotProps">
-        <AqiValue :value="slotProps.data.aqi" />
-      </template>
-    </Column>
-    <Column field="updatedAt" header="Last Updated At" :sortable="true">
-      <template #body="slotProps">
-        <span>
-          {{ getTimeString(slotProps.data.updatedAt) }}
-        </span>
-      </template>
-    </Column>
-    <Column field="" header="Actions">
-      <template #body="slotProps">
-        <Button
-          @click="updateSelectedCity(slotProps.data.name)"
-          icon="pi pi-chart-line"
-          class="p-button-sm p-button-outlined p-button-rounded"
-        />
-      </template>
-    </Column>
-  </DataTable>
+  <Card>
+    <template #content>
+      <DataTable :value="allCities">
+        <Column field="name" header="Name" :sortable="true"></Column>
+        <Column field="aqi" header="Air Quality Index" :sortable="true">
+          <template #body="slotProps">
+            <AqiValue :value="slotProps.data.aqi" />
+          </template>
+        </Column>
+        <Column field="updatedAt" header="Last Updated At" :sortable="true">
+          <template #body="slotProps">
+            <span>
+              {{ getTimeString(slotProps.data.updatedAt) }}
+            </span>
+          </template>
+        </Column>
+        <Column field="" header="Actions">
+          <template #body="slotProps">
+            <Button
+              @click="updateSelectedCity(slotProps.data.name)"
+              icon="pi pi-chart-line"
+              class="p-button-sm p-button-outlined p-button-rounded"
+            />
+          </template>
+        </Column>
+      </DataTable>
+    </template>
+  </Card>
 </template>
 
 <script>

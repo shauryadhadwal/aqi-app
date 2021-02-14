@@ -1,11 +1,12 @@
 import { createStore } from 'vuex'
 import { HISTORY_LIMIT } from '../shared/constants'
-import { DateTime } from 'luxon'
+import { FormatDate, SortCities } from '../shared/utils'
 
 const getDefaultState = () => ({
   cities: {},
   cityHistories: {},
   selectedCity: null,
+  selectedCityLatestEntry: null,
 })
 
 const createCityPayload = (payload) => ({
@@ -27,18 +28,6 @@ const getUpdatedHistoriesList = (newEntry, histories) => {
   return [...histories, newEntry]
 }
 
-const sortCityAscending = (a, b) => {
-  const aName = a.name.toUpperCase()
-  const bName = b.name.toUpperCase()
-  if (aName > bName) {
-    return 1
-  }
-  if (aName < bName) {
-    return -1
-  }
-  return 0
-}
-
 export default createStore({
   state: getDefaultState(),
   getters: {
@@ -47,7 +36,7 @@ export default createStore({
     },
     // Default Ascending
     allCitiesSortedByName(state) {
-      return Object.values(state.cities).sort(sortCityAscending)
+      return Object.values(state.cities).sort(SortCities.byAqiValue)
     },
     cityHistory: (state) => (city) => {
       return state.cityHistories[city] || []
@@ -58,7 +47,7 @@ export default createStore({
       }
       return state.cityHistories[city].map((ele) => ({
         ...ele,
-        updatedAt: DateTime.fromJSDate(ele.updatedAt).toFormat('HH:mm:ss'),
+        updatedAtHHmmss: FormatDate.getTimeInHHmmss(ele.updatedAt),
       }))
     },
   },
@@ -78,6 +67,9 @@ export default createStore({
     updateSelectedCity(state, payload) {
       state.selectedCity = payload
     },
+    updateSelectedCityLatestEntry(state, payload) {
+      state.selectedCityLatestEntry = payload
+    },
   },
   actions: {
     updateCities({ state, commit }, cityList) {
@@ -96,6 +88,9 @@ export default createStore({
           },
           state.cityHistories[city.city]
         )
+        if (state.selectedCity === city.city) {
+          commit('updateSelectedCityLatestEntry', cityPayload)
+        }
       }
       commit('updateCities', updatedCityState)
       commit('updateCityHistories', updatedCityHistoriesState)
@@ -104,5 +99,4 @@ export default createStore({
       commit('updateSelectedCity', city)
     },
   },
-  modules: {},
 })
