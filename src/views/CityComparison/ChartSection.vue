@@ -6,7 +6,7 @@
           @click="generateChart"
           class="p-button-sm p-ml-1"
           v-tooltip="''"
-          label="Generate chart for data uptill now"
+          label="Generate Snapshot"
           :disabled="!cities.length"
         />
       </section>
@@ -44,7 +44,9 @@ const getDefaultChartOptions = () => ({
           display: true,
           labelString: 'AQI Levels',
         },
-        gridLines: {},
+        gridLines: {
+          display: false,
+        },
         ticks: {
           display: false,
           autoSkip: false,
@@ -80,6 +82,21 @@ const createDataSet = (cityName, yValues, color) => ({
   borderColor: color,
 })
 
+const getMergedYValues = (timestamps, cityHistories, timestampMap) => {
+  const finalArray = []
+  for (var i = 0; i < timestamps.length; i++) {
+    const matchingItem = cityHistories.find(
+      (ele) => ele.updatedAtHHmmss === timestampMap[timestamps[i]]
+    )
+    if (matchingItem) {
+      finalArray.push(matchingItem.aqi)
+    } else {
+      finalArray.push(null)
+    }
+  }
+  return finalArray
+}
+
 export default {
   props: {
     cities: {
@@ -102,13 +119,37 @@ export default {
     generateChart() {
       const vm = this
       vm.chartData = getDefaultChartData()
-      const firstCityHistories = vm.getCityHistory(vm.cities[0].name)
-      const xValues = firstCityHistories.map((ele) => ele.updatedAtHHmmss)
-      const yValues = firstCityHistories.map((ele) => ele.aqi)
-      vm.chartData.datasets.push(
-        createDataSet(vm.cities[0].name, yValues, COLOUR_PALETTE[0])
+      const timestampMap = {}
+      const cityHistoriesSnapshot = {}
+      // Save snapshot of histories
+      vm.cities.forEach((city) => {
+        cityHistoriesSnapshot[city.name] = vm.getCityHistory(city.name)
+      })
+      // Fetch all timestamps for selected cities
+      Object.values(cityHistoriesSnapshot).forEach((historyList) => {
+        historyList.forEach(
+          (historyObj) =>
+            (timestampMap[historyObj.updatedAtEpoch] =
+              historyObj.updatedAtHHmmss)
+        )
+      })
+      // Create datasets for each city
+      // iterate over labels and add corresponding aqi of each city, if not present
+      // fill value against timestamp as null
+      const sortedTimestamps = Object.keys(timestampMap).sort()
+      vm.cities.forEach((city, index) => {
+        const yValues = getMergedYValues(
+          sortedTimestamps,
+          cityHistoriesSnapshot[city.name],
+          timestampMap
+        )
+        vm.chartData.datasets.push(
+          createDataSet(city.name, yValues, COLOUR_PALETTE[index])
+        )
+      })
+      vm.chartData.labels = sortedTimestamps.map(
+        (timestamp) => timestampMap[timestamp]
       )
-      vm.chartData.labels = xValues
       vm.remakeChart()
     },
   },

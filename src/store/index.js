@@ -51,6 +51,7 @@ export default createStore({
       return state.cityHistories[city].map((ele) => ({
         ...ele,
         updatedAtHHmmss: FormatDate.getTimeInHHmmss(ele.updatedAt),
+        updatedAtEpoch: ele.updatedAt.valueOf(),
       }))
     },
   },

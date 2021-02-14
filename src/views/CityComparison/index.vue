@@ -82,7 +82,6 @@ export default {
   watch: {
     selectedCities() {
       if (this.selectedCities.length > COMPARISONS_LIMIT) {
-        console.log('LIMIT_REACHED')
         this.selectedCities = this.selectedCities.slice(0, COMPARISONS_LIMIT)
       }
     },
