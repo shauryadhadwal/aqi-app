@@ -16,9 +16,7 @@
         </Column>
         <Column field="updatedAt" header="Last Updated At" :sortable="true">
           <template #body="slotProps">
-            <span>
-              {{ getTimeString(slotProps.data.updatedAt) }}
-            </span>
+            <RelativeTime :dateTime="slotProps.data.updatedAt" />
           </template>
         </Column>
         <Column field="updatedAt" header="Category">
@@ -51,10 +49,11 @@
 import { mapGetters } from 'vuex'
 import AqiValue from '@/components/Table/AqiValue'
 import AqiCategory from '@/components/Table/AqiCategory'
+import RelativeTime from '@/components/Table/RelativeTime'
 import { getTimeInRelativeFormat } from '../../shared/utils'
 export default {
   name: 'Home',
-  components: { AqiValue, AqiCategory },
+  components: { AqiValue, AqiCategory, RelativeTime },
   computed: {
     ...mapGetters({ allCities: 'allCitiesSortedByName' }),
   },
