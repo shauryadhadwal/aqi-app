@@ -1,9 +1,12 @@
 <template>
-  <div class="container" :style="'border-color:' + color">{{ value }}</div>
+  <div class="container" :style="'background-color:' + color">
+    {{ category }}
+  </div>
 </template>
 
 <script>
-import { getHexCodeFromAQI } from '../../shared/utils'
+import { getHexCodeFromAQI, getCategoryFromAQI } from '../../shared/utils'
+import { AIR_QUALITY_CATEGORIES } from '../../shared/constants'
 export default {
   props: {
     value: Number,
@@ -11,6 +14,9 @@ export default {
   computed: {
     color() {
       return getHexCodeFromAQI(this.value)
+    },
+    category() {
+      return AIR_QUALITY_CATEGORIES[getCategoryFromAQI(this.value)]
     },
   },
 }
@@ -22,9 +28,8 @@ export default {
   color: #4e4e4e;
   padding: 0.8rem;
   border-radius: 1rem;
-  width: 4rem;
+  width: 8rem;
   font-size: 0.8rem;
   text-align: center;
-  border: 3px solid;
 }
 </style>

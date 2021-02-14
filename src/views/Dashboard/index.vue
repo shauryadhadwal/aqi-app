@@ -2,7 +2,13 @@
   <Card>
     <template #content>
       <DataTable :value="allCities">
-        <Column field="name" header="Name" :sortable="true"></Column>
+        <Column field="name" header="Name" :sortable="true">
+          <template #body="slotProps">
+            <strong>
+              {{ slotProps.data.name }}
+            </strong>
+          </template>
+        </Column>
         <Column field="aqi" header="Air Quality Index" :sortable="true">
           <template #body="slotProps">
             <AqiValue :value="slotProps.data.aqi" />
@@ -13,6 +19,11 @@
             <span>
               {{ getTimeString(slotProps.data.updatedAt) }}
             </span>
+          </template>
+        </Column>
+        <Column field="updatedAt" header="Category">
+          <template #body="slotProps">
+            <AqiCategory :value="slotProps.data.aqi" />
           </template>
         </Column>
         <Column field="" header="Actions">
@@ -32,10 +43,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import AqiValue from '@/components/Table/AqiValue'
+import AqiCategory from '@/components/Table/AqiCategory'
 import { getTimeInRelativeFormat } from '../../shared/utils'
 export default {
   name: 'Home',
-  components: { AqiValue },
+  components: { AqiValue, AqiCategory },
   computed: {
     ...mapGetters({ allCities: 'allCitiesSortedByName' }),
   },
