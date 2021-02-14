@@ -48,3 +48,27 @@ export const FormatDate = {
     return DateTime.fromJSDate(date).toFormat('HH:mm:ss')
   },
 }
+
+export const SortCities = {
+  byName(a, b) {
+    const aName = a.name.toUpperCase()
+    const bName = b.name.toUpperCase()
+    if (aName > bName) {
+      return 1
+    }
+    if (aName < bName) {
+      return -1
+    }
+    return 0
+  },
+
+  byAqiValue(a, b) {
+    if (a.aqi > b.aqi) {
+      return 1
+    }
+    if (a.aqi < b.aqi) {
+      return -1
+    }
+    return 0
+  },
+}

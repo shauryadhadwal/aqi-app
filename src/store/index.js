@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import { HISTORY_LIMIT } from '../shared/constants'
-import { FormatDate } from '../shared/utils'
+import { FormatDate, SortCities } from '../shared/utils'
 
 const getDefaultState = () => ({
   cities: {},
@@ -28,18 +28,6 @@ const getUpdatedHistoriesList = (newEntry, histories) => {
   return [...histories, newEntry]
 }
 
-const sortCityAscending = (a, b) => {
-  const aName = a.name.toUpperCase()
-  const bName = b.name.toUpperCase()
-  if (aName > bName) {
-    return 1
-  }
-  if (aName < bName) {
-    return -1
-  }
-  return 0
-}
-
 export default createStore({
   state: getDefaultState(),
   getters: {
@@ -48,7 +36,7 @@ export default createStore({
     },
     // Default Ascending
     allCitiesSortedByName(state) {
-      return Object.values(state.cities).sort(sortCityAscending)
+      return Object.values(state.cities).sort(SortCities.byAqiValue)
     },
     cityHistory: (state) => (city) => {
       return state.cityHistories[city] || []
