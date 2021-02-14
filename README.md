@@ -14,7 +14,7 @@ https://shauryadhadwal.github.io/aqi-app/
 
 > Since Github Pages doesn't support SPA, refreshing the browser on any other path than the one mentioned above will result in a 404 error.
 
-> All decisions have been made considering that data of no more than 10 Cities' can be received, and no more than 1 websocket event per second.
+> All decisions have been made considering that data of no more than 12 Cities' can be received, and no more than 1 websocket event per second.
 > To enhance the application for high load, **other decisions** would have to me made.
 
 > Application is responsive but designed using **Desktop-First** approach. Would recommend to use latest version of **Chrome Browser** for best experience.
@@ -43,6 +43,12 @@ npm install
 ```
 
 Check the .env_example file and set up the websocket connection
+
+Websocket messages are expected to be of the following form for the application to work correctly:
+
+```
+[{city: "Mumbai", aqi: "150.23145"}, {city: "Delhi", aqi: "308.67312"}]
+```
 
 #### Compiles and hot-reloads for development
 
