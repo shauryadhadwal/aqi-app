@@ -29,10 +29,16 @@
         <Column field="" header="Actions">
           <template #body="slotProps">
             <Button
-              @click="updateSelectedCity(slotProps.data.name)"
+              @click="redirectToLiveView(slotProps.data.name)"
               icon="pi pi-chart-line"
-              class="p-button-sm p-button-outlined p-button-rounded"
+              class="p-button-sm p-button-outlined p-button-rounded p-mr-1"
               v-tooltip="'Live Chart'"
+            />
+            <Button
+              @click="redirectToComparisonView(slotProps.data.name)"
+              icon="pi pi-table"
+              class="p-button-sm p-button-outlined p-button-rounded"
+              v-tooltip="'Compare Now'"
             />
           </template>
         </Column>
@@ -59,9 +65,13 @@ export default {
         dateObject.getMilliseconds()
       )
     },
-    updateSelectedCity(city) {
+    redirectToLiveView(city) {
       this.$store.dispatch('updateSelectedCity', city)
       this.$router.push('/liveChart').catch((err) => console.error(err))
+    },
+    redirectToComparisonView(city) {
+      this.$store.dispatch('addToComparisonList', city)
+      this.$router.push('/cityComparison').catch((err) => console.error(err))
     },
   },
 }

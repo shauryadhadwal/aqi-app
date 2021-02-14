@@ -12,6 +12,11 @@ const routes = [
     name: 'Live Chart',
     component: () => import('../views/LiveChart/index.vue'),
   },
+  {
+    path: '/cityComparison',
+    name: 'City Comparison',
+    component: () => import('../views/CityComparison/index.vue'),
+  },
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 

@@ -16,7 +16,7 @@ import ColumnGroup from 'primevue/columngroup'
 import Button from 'primevue/button'
 import Chart from 'primevue/chart'
 import Card from 'primevue/card'
-
+import MultiSelect from 'primevue/multiselect'
 const app = createApp(App)
 // Register Middlewares
 app.use(store)
@@ -28,6 +28,7 @@ app.component('ColumnGroup', ColumnGroup)
 app.component('Button', Button)
 app.component('Chart', Chart)
 app.component('Card', Card)
+app.component('MultiSelect', MultiSelect)
 app.directive('tooltip', Tooltip)
 // Mount App
 app.mount('#app')

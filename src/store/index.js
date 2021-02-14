@@ -7,6 +7,7 @@ const getDefaultState = () => ({
   cityHistories: {},
   selectedCity: null,
   selectedCityLatestEntry: null,
+  comparisonList: new Set(),
 })
 
 const createCityPayload = (payload) => ({
@@ -34,7 +35,9 @@ export default createStore({
     allCities(state) {
       return Object.values(state.cities)
     },
-    // Default Ascending
+    allCityNames(state) {
+      return Object.keys(state.cities)
+    },
     allCitiesSortedByName(state) {
       return Object.values(state.cities).sort(SortCities.byAqiValue)
     },
@@ -70,6 +73,12 @@ export default createStore({
     updateSelectedCityLatestEntry(state, payload) {
       state.selectedCityLatestEntry = payload
     },
+    addToComparisonList(state, city) {
+      state.comparisonList.add(city)
+    },
+    clearComparisonList(state) {
+      state.comparisonList.clear()
+    },
   },
   actions: {
     updateCities({ state, commit }, cityList) {
@@ -97,6 +106,12 @@ export default createStore({
     },
     updateSelectedCity({ commit }, city) {
       commit('updateSelectedCity', city)
+    },
+    addToComparisonList({ commit }, city) {
+      commit('addToComparisonList', city)
+    },
+    clearComparisonList({ commit }) {
+      commit('clearComparisonList')
     },
   },
 })
