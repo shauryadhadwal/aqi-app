@@ -1,4 +1,5 @@
 import { AIR_QUALITY_STANDARDS_HEX_CODES } from './constants'
+import { DateTime } from 'luxon'
 
 export const getCategoryFromAQI = (value) => {
   if (value >= 401) return 'SEVERE'
@@ -40,4 +41,10 @@ export const getTimeInRelativeFormat = (current, previous) => {
   } else {
     return 'approximately ' + Math.round(elapsed / msPerYear) + ' years ago'
   }
+}
+
+export const FormatDate = {
+  getTimeInHHmmss(date) {
+    return DateTime.fromJSDate(date).toFormat('HH:mm:ss')
+  },
 }
