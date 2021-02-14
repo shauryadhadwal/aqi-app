@@ -1,15 +1,31 @@
 <template>
-  <section class="p-grid p-jc-center p-align-center p-flex-column">
-    <h1>
+  <section class="p-grid p-jc-center p-align-center p-flex-column topbar">
+    <div class="header">
       Air Quality Monitoring
-    </h1>
-    <h4>For Major Indian Cities</h4>
+    </div>
+    <div class="sub-header">For Major Indian Cities</div>
   </section>
-  <router-view />
+  <section class="main-content">
+    <router-view />
+  </section>
 </template>
 
-<style scoped>
-section {
-  background-color: ;
+<style lang="scss" scoped>
+.topbar {
+  background-color: #2b6785;
+  color: #e2edea;
+  padding: 0.5rem 0;
+
+  .header {
+    font-weight: 900;
+    font-size: 2rem;
+  }
+  .sub-header {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+}
+.main-content {
+  padding: 2rem 10rem;
 }
 </style>

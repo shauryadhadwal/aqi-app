@@ -1,5 +1,5 @@
 <template>
-  <section class="p-grid">
+  <section id="heading-section" class="p-grid">
     <div class="p-col-1 p-grid p-jc-center p-align-center">
       <Button
         @click="redirectToHome"
@@ -11,15 +11,20 @@
       <h1>Live Chart for {{ selectedCity }}</h1>
     </div>
   </section>
-  <section class="">
-    <Chart
-      type="line"
-      :data="chartData"
-      :options="chartOptions"
-      ref="liveChart"
-    />
+  <section id="chart-section">
+    <Card>
+      <template #content>
+        <Chart
+          type="line"
+          :data="chartData"
+          :options="chartOptions"
+          :height="400"
+          ref="liveChart"
+        />
+      </template>
+    </Card>
   </section>
-  <section class="p-d-flex p-jc-center badge-container">
+  <section id="status-section" class="p-d-flex p-jc-center badge-container">
     <AqiLevelBadge :label="'All Time High'" :value="allTime.max" />
     <AqiLevelBadge :label="'All Time Low'" :value="allTime.min" />
     <AqiLevelBadge :label="'Latest'" :value="allTime.latest" />
@@ -33,6 +38,7 @@ import { HISTORY_LIMIT } from '../../shared/constants'
 import AqiLevelBadge from '@/components/Badge/AqiLevelBadge'
 
 const getChartOptions = () => ({
+  maintainAspectRatio: false,
   elements: {
     line: {
       tension: 0,
@@ -155,7 +161,8 @@ export default {
 </script>
 
 <style scoped>
-.line-chart {
-  width: 100%;
+#chart-section {
+  height: 60vh;
+  position: relative;
 }
 </style>
