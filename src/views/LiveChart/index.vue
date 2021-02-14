@@ -1,14 +1,29 @@
 <template>
-  <h1>Live Chart for {{ selectedCity }}</h1>
-  <Chart
-    type="line"
-    :data="chartData"
-    :options="chartOptions"
-    ref="liveChart"
-  />
-  <AqiLevelBadge :label="'All Time High'" :value="allTime.max" />
-  <AqiLevelBadge :label="'All Time Low'" :value="allTime.min" />
-  <AqiLevelBadge :label="'Latest'" :value="allTime.latest" />
+  <section class="p-grid">
+    <div class="p-col-1 p-grid p-jc-center p-align-center">
+      <Button
+        @click="redirectToHome"
+        icon="pi pi-home"
+        class="p-button-sm p-button-outlined p-button-rounded"
+      />
+    </div>
+    <div class="p-col">
+      <h1>Live Chart for {{ selectedCity }}</h1>
+    </div>
+  </section>
+  <section class="">
+    <Chart
+      type="line"
+      :data="chartData"
+      :options="chartOptions"
+      ref="liveChart"
+    />
+  </section>
+  <section class="p-d-flex p-jc-center badge-container">
+    <AqiLevelBadge :label="'All Time High'" :value="allTime.max" />
+    <AqiLevelBadge :label="'All Time Low'" :value="allTime.min" />
+    <AqiLevelBadge :label="'Latest'" :value="allTime.latest" />
+  </section>
 </template>
 
 <script>
@@ -18,37 +33,49 @@ import { HISTORY_LIMIT } from '../../shared/constants'
 import AqiLevelBadge from '@/components/Badge/AqiLevelBadge'
 
 const getChartOptions = () => ({
-  bezierCurve: false,
+  elements: {
+    line: {
+      tension: 0,
+      borderColor: '#54636D',
+    },
+  },
   scales: {
     yAxes: [
       {
         gridLines: {
           display: false,
         },
+        ticks: {
+          autoSkip: false,
+          stepSize: 1,
+        },
       },
     ],
     xAxes: [
       {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 90,
+          minRotation: 45,
+        },
         gridLines: {
           display: false,
         },
       },
     ],
   },
-  animation: {
-    duration: 0,
-  },
   hover: {
     animationDuration: 0,
   },
-  responsiveAnimationDuration: 0,
+  animation: {
+    duration: 0,
+  },
 })
 
 const getDataSets = () => [
   {
     label: undefined,
-    lineTension: 0,
-    backgroundColor: 'rgba(24, 24, 153, 0.5)',
+    backgroundColor: '#DCE6EC',
     data: [],
   },
 ]
@@ -84,6 +111,9 @@ export default {
     },
   },
   methods: {
+    redirectToHome() {
+      this.$router.replace('/').catch((err) => console.error(err))
+    },
     insertIntoChartData(entry) {
       if (this.chartData.labels.length >= HISTORY_LIMIT) {
         this.chartData.labels.splice(0, 1)
@@ -124,4 +154,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.line-chart {
+  width: 100%;
+}
+</style>
